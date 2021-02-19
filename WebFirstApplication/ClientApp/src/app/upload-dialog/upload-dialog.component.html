@@ -1,0 +1,71 @@
+
+<div bsModal #uploadmodal="bs-modal" class="modal fade"
+     tabindex="-1" role="dialog" aria-labelledby="uploadmodal"
+     (onShown)="shown()"
+     aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          {{"Uploaded file"}}
+        </h4>
+        <button type="button" class="close" (click)="close()" [attr.aria-label]="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label>Upload  files</label>
+          <upload-document (itemUploaded)="UploadEvidanceDocument($event)"></upload-document>
+        </div>
+        <div>
+          <p-table #dataTableUpload
+                   [paginator]="true"
+                      [value]="notes"
+                   [rows]="4"
+                   *ngIf="notes && notes.length > 0">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 125px">File name</th>
+                <th style="width: 125px">File type</th>
+                <th style="width: 125px">Date</th>
+                <th style="width: 125px">Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-file>
+              <tr>
+                <td class="my-cell word-wrapping">
+                  {{file.fileName}}
+                </td>
+                <td >
+                  {{file.contetntType}}
+                </td>
+                <td >
+                  {{file.contetntType}}
+                </td>
+                <td >
+                  <button pButton type="button" (click)="PreviewDoc(file.uploadDocumentGuid)"
+                          icon="pi pi-search" class="margin-left" iconPos="left">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+              <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+              <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+          </p-table>
+        
+        </div>
+        
+
+      </div>
+      <div class="modal-footer">
+        <button pButton type="button" class="ui-button-rounded btnclass" (click)="close()" label="Ok"> </button>
+        <!--<button pButton type="button" class="ui-button-rounded btnclass" (click)="close()" label="Cancel"></button>-->
+      </div>
+    </div>
+  </div>
+</div>

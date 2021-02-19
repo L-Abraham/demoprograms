@@ -1,0 +1,8 @@
+<div *ngIf="document" style="display: flex; flex: 1 1 auto">
+  <div [ngSwitch]="document.contetntType" style="display:flex; flex: 1 1 auto;">
+    <ng2-pdfjs-viewer #pdfViewer *ngSwitchCase="'application/pdf'" style="flex: 1 1 auto; width: 100%; height:100%"></ng2-pdfjs-viewer>
+    <div style="display:flex; flex: 1 1 auto; justify-content: center; align-items: center;">
+      <img *ngSwitchDefault alt="" [src]="imageContent" style="flex: 1 1 auto; width: 100%; height: 100%; object-fit: contain;">
+    </div>
+  </div>
+</div>

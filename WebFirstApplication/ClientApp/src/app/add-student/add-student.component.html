@@ -1,0 +1,49 @@
+<p-card class="p-card-properties_form">
+  <p-header class="row-flex-space">
+    <p *ngIf="!studentDto.id">{{"Add Student"}}</p>
+    <p *ngIf="studentDto.id">{{"Edit Student"}}</p>
+  </p-header>
+
+    <div class="col-flex us-edit-container">
+      <form #studentForm="ngForm">
+        <div >
+          <label for="FirstName">{{"First Name" }}</label>
+          <input id="FirstName" #firstNameInput="ngModel" type="text"
+                 name="FirstName" class="form-control" [(ngModel)]="studentDto.firstName" />
+        </div>
+
+        <div >
+          <label for="LastName">{{"Last Name"}}</label>
+          <input id="LastName" #lastNameInput="ngModel" type="text"
+                 name="LastName" class="form-control" [(ngModel)]="studentDto.lastName" />
+        </div>
+
+        <div >
+          <label for="StudentId">{{"Student ID"}}</label>
+          <input id="StudentId" #studentIdInput="ngModel" type="text"
+                 name="StudentId" class="form-control" [(ngModel)]="studentDto.studentID" />
+        </div>
+
+
+        <div >
+          <label for="Address">{{"Address"}}</label>
+          <input id="Address" #addressInput="ngModel" type="text"
+                 name="Address" class="form-control" [(ngModel)]="studentDto.address" />
+        </div>
+
+        <div >
+          <label for="EmailAddress">{{"Email Address"}}</label>
+          <input id="EmailAddress" #emailAddressInput="ngModel" type="text"
+                 name="EmailAddress" class="form-control" [(ngModel)]="studentDto.emailAddress" />
+        </div>
+      </form>
+
+      <div class="row-flex-end margin-top margin-bottom-15">
+        <button pButton type="button" (click)="get()"
+                label="Cancel"  class="ui-button-rounded ui-button-secondary"></button>
+        <button pButton type="button" (click)="save()"
+                label="Save" class="ui-button-rounded ui-button-warning margin-left"></button>
+      </div>
+      </div>
+   
+</p-card>

@@ -1,0 +1,124 @@
+<p-card class="p-card-properties_form">
+
+  <p-header class="row-flex-space">
+    {{"Select Courses"}}
+  </p-header>
+ 
+  <div class="col-flex us-edit-container">
+    <form #coursestudentForm="ngForm">
+      <div class="row-flex-justified">
+        <div class="col-flex">
+          <div>
+            <label for="FirstName">{{"First Name" }}</label>
+            <input id="FirstName" #firstNameInput="ngModel" type="text"
+                   name="FirstName" class="form-control" [(ngModel)]="studentDto.firstName" />
+          </div>
+
+          <div>
+            <label for="LastName">{{"Last Name"}}</label>
+            <input id="LastName" #lastNameInput="ngModel" type="text"
+                   name="LastName" class="form-control" [(ngModel)]="studentDto.lastName" />
+          </div>
+
+          <div>
+            <label for="StudentId">{{"Student ID"}}</label>
+            <input id="StudentId" #studentIdInput="ngModel" type="text"
+                   name="StudentId" class="form-control" [(ngModel)]="studentDto.studentID" />
+          </div>
+        </div>
+        <div class="col-flex">
+          <p-listbox [options]="courses" [(ngModel)]="selectedCourses" [style]="{'width':'500px'}"
+                     multiple="multiple"
+                     checkbox="checkbox"
+                     id="Courses"
+                     name="Courses"
+                     [showToggleAll]="false"
+                     optionLabel="courseName">
+            <p-header>
+              Courses
+            </p-header>
+          </p-listbox>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row-flex-justified">
+        <button pButton type="button" (click)="AddCourses()" [disabled]="EnabledAddCourses()"
+                label="Add Courses" class="ui-button-rounded ui-button-secondary"></button>
+      </div>
+
+
+      <div class="row-flex-justified">
+
+        <div class="margin-top">
+          <div class="primeng-datatable-container">
+            <p-table [value]="studentCourses" (onLazyLoad)="getItems($event)" [paginator]="true"
+                     [rows]="8" 
+                     selectionMode="single" (onRowSelect)="onRowSelect($event)"
+                     dataKey="id" #resultTable>
+                     >
+
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 125px" pSortableColumn="CourseName">
+                    {{"Course Name"}}
+                    <p-sortIcon field="CourseName"></p-sortIcon>
+                  </th>
+                  <th style="width: 50px" pSortableColumn="CourseCode">
+                    {{"Course Code"}}
+                    <p-sortIcon field="CourseCode"></p-sortIcon>
+                  </th>
+                  <th style="width: 100px" pSortableColumn="CoruseDate">
+                    {{"Coruse Date"}}
+                    <p-sortIcon field="CoruseDate"></p-sortIcon>
+                  </th>
+                  <th style="width: 50px" pSortableColumn="CoruseTime">
+                    {{"Coruse Time"}}
+                    <p-sortIcon field="CoruseTime"></p-sortIcon>
+                  </th>
+                  <th style="width: 100px">
+                    {{"Action"}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-record="$implicit">
+                <tr [pSelectableRow]="record">
+                  <td style="width: 125px">
+                    {{record.course.courseName}}
+                  </td>
+                  <td style="width: 50px">
+                    {{record.course.courseCode}}
+                  </td>
+                  <td style="width: 100px">
+                    {{record.course.coruseDate| date: "yyyy-MM-dd"}}
+                  </td>
+                  <td style="width: 50px">
+                    {{record.course.coruseTime}}
+                  </td>
+
+                  <td style="width: 100px">
+                 
+                    <button pButton type="button" (click)="uploadmodal.show(record.id)"
+                            icon="pi pi-upload" iconPos="left"></button>
+                    <!--<button pButton type="button" (click)="View()" icon="pi pi-eye"
+                            iconPos="left" class="margin-left-small"></button>-->
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <ng-template pTemplate="paginatorleft">
+              <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+              <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <app-upload-dialog #uploadmodal  ></app-upload-dialog>
+  </div>
+</p-card>

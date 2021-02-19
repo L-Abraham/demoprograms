@@ -1,0 +1,74 @@
+<div class="row-flex-space">
+  <div>
+    <p-card class="p-card-properties_form">
+      <p-header class="row-flex-space">
+        <p>{{"Courses"}}</p>
+        <div style="margin-right: 1rem" class="input-group-btn">
+          <button pButton type="button"
+                  (click)="createNewCourse()" label="Add Course"
+                  class="ui-button-rounded"></button>
+        </div>
+      </p-header>
+      <div class="us-main-container">
+        <div class="margin-top">
+          <div class="primeng-datatable-container">
+            <p-table [value]="courses" (onLazyLoad)="getItems($event)" [paginator]="true"
+                     [rows]="10" [totalRecords]="totalRecords"
+                     selectionMode="single" (onRowSelect)="onRowSelect($event)"
+                     dataKey="id" #resultTable>
+
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="CourseName">
+                    {{"Course Name"}}
+                    <p-sortIcon field="CourseName"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="CourseCode">
+                    {{"Course Code"}}
+                    <p-sortIcon field="CourseCode"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="CoruseDate">
+                    {{"Coruse Date"}}
+                    <p-sortIcon field="CoruseDate"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="CourseTime">
+                    {{"Course Time"}}
+                    <p-sortIcon field="CourseTime"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-record="$implicit">
+                <tr [pSelectableRow]="record">
+                  <td style="width: 125px">
+                    {{record.courseName}}
+                  </td>
+                  <td style="width: 125px">
+                    {{record.courseCode}}
+                  </td>
+                  <td style="width: 250px">
+                    {{record.coruseDate| date: "yyyy-MM-dd"}}
+                  </td>
+                  <td style="width: 100px">
+                    {{record.coruseTime}}
+                  </td>
+
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+              </ng-template>
+              <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+              </ng-template>
+            </p-table>
+           
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div>
+    <createCourse #createCourse (onSave)="getItems()"></createCourse>
+  </div>
+</div>
+

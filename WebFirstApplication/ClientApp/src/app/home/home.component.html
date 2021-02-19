@@ -1,0 +1,31 @@
+<div class="login-container">
+  <div class="login-header">{{"Student lecture Assessment System"}}</div>
+   <p-card class="p-card-properties">
+    <p-header>
+      <p class="login-label">{{"LogIn"}}</p>
+    </p-header>
+    <form class="col-flex-center" #loginForm="ngForm" method="post" novalidate (ngSubmit)="login()">
+
+      <div class="row-flex-center add-padding">
+        <input #emailAddressInput="ngModel" 
+               [(ngModel)]="userDto.emailAddress" autoFocus type="text"  placeholder="StudentEmail"
+               autocomplete="new-password" name="userEmailAddress" required pInputText />
+
+      </div>
+
+      <div class="row-flex-center add-padding">
+        <input #passwordInput="ngModel" [(ngModel)]="userDto.password" type="password"
+               autocomplete="new-password" name="password" required placeholder="Password"
+               maxlength="32" pInputText />
+
+      </div>
+
+      <div class="row-flex-center add-padding">
+        <button pButton  type="submit" label="login"  class="ui-button-rounded ui-button-warning"></button>
+      </div>
+
+    </form>
+  </p-card>
+
+
+</div>

@@ -1,0 +1,15 @@
+.ui-button-text {
+  font-size: 13px;
+  margin-left: 9px;
+}
+
+.us-main-container {
+  height: calc(100vh - 244px);
+  overflow-y: auto;
+}
+
+.us-edit-container {
+  width: 350px;
+  height: calc(100vh - 240px);
+  overflow-y: auto;
+}

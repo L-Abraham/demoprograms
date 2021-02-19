@@ -1,0 +1,47 @@
+<p-card class="p-card-properties_form">
+  <p-header class="row-flex-space">
+    <p *ngIf="!coursesDto.id">{{"Add Course"}}</p>
+    <p *ngIf="coursesDto.id">{{"Edit Course"}}</p>
+  </p-header>
+
+    <div class="col-flex us-edit-container">
+      <form #courseForm="ngForm">
+        <div>
+          <label for="CourseName">{{"Course Name" }}</label>
+          <input id="CourseName" #courseNameInput="ngModel" type="text"
+                 name="CourseName" class="form-control" [(ngModel)]="coursesDto.courseName" />
+        </div>
+
+        <div>
+          <label for="CourseCode">{{"Course Code"}}</label>
+          <input id="CourseCode" #courseCodeInput="ngModel" type="text"
+                 name="CourseCode" class="form-control" [(ngModel)]="coursesDto.courseCode" />
+        </div>
+
+        <div>
+          <label for="CoruseDate">{{"Coruse Date"}}</label>
+             
+        </div>
+        <div>
+          <p-calendar class="p-calender-properties" name="CoruseDate"  [style]="{'width':'100%'}"
+                      dateFormat="yy-mm-dd"  appendTo="body"
+                      [(ngModel)]="coursesDto.coruseDate"
+                      [showIcon]="true" placeholder="YYYY-MM-DD">
+          </p-calendar>
+        </div>
+        <div>
+          <label for="CourseTime">{{"Course Time"}}</label>
+          <input id="CourseTime" #courseTimeInput="ngModel" type="text"
+                 name="CourseTime" class="form-control" [(ngModel)]="coursesDto.coruseTime" />
+        </div>
+      </form>
+
+      <div class="row-flex-end margin-top margin-bottom-15">
+        <button pButton type="button" (click)="get()"
+                label="Cancel" class="ui-button-rounded ui-button-secondary"></button>
+        <button pButton type="button" (click)="save()"
+                label="Save" class="ui-button-rounded ui-button-warning margin-left"></button>
+      </div>
+    </div>
+
+</p-card>
