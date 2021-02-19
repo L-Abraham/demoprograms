@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,17 +11,7 @@ using System.Windows.Forms;
 
 namespace TicTacTocGame
 {
-    public class TicTacObject
-    {
-        public int UserIndex { get; set; }
-        public bool Checked { get; set; }
-        public int X_Min { get; set; }
-        public int Y_Min { get; set; }
-        public int X_Max { get; set; }
-        public int Y_Max { get; set; }
-
-    }
-
+   
     public partial class Form1 : Form
     {
         const int Width = 450;
@@ -29,6 +20,7 @@ namespace TicTacTocGame
 
         Image image1;
         Image image2;
+        bool flag = true;
 
         TicTacObject[,] TicTacObject = new TicTacObject[,]
         {
@@ -50,8 +42,16 @@ namespace TicTacTocGame
         {
             InitializeComponent();
             UserIndex = 1;
+            flag = true;
         }
 
+        /// <summary>
+        /// A private funtion to fill the bacground including drawing the lines
+        /// of the game
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="image1"></param>
+        /// <param name="image2"></param>
         private void DrawTicTacToeBackground(Graphics g, Image image1, Image image2)
         {
             // fill the background of the rectangular
@@ -69,12 +69,22 @@ namespace TicTacTocGame
 
         }
 
+        /// <summary>
+        /// The function that load the images from the local rep
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void Form1_Load(object sender, EventArgs e)
         {
             // make the form not resizable
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            image1 = Image.FromFile(@"C:\WorkSpaceLiza\FirstApplication\O.png");
-            image2 = Image.FromFile(@"C:\WorkSpaceLiza\FirstApplication\X.png");
+
+            if (File.Exists(@"O.png") && File.Exists(@"X.png"))
+              {
+                image1 = Image.FromFile(@"O.png");
+                image2 = Image.FromFile(@"X.png");
+            }
         }
 
         private void TicTacPictureBox_Paint(object sender, PaintEventArgs e)
@@ -82,6 +92,13 @@ namespace TicTacTocGame
             DrawTicTacToeBackground(e.Graphics, image1, image2);
         }
 
+        /// <summary>
+        /// Get the object inde 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="userIndex"></param>
+        /// <returns></returns>
         private Tuple<int, int, bool> GetObjectIndex(int x, int y, int userIndex)
         {
             for (int i = 0; i < NoOfLines; i++)
@@ -112,6 +129,7 @@ namespace TicTacTocGame
 
         private bool WinGame(int currentUser)
         {
+          
             // need to check vertical
             // need to check horizontal
             // need to check diagonal 
@@ -152,22 +170,26 @@ namespace TicTacTocGame
 
         private void TicTacPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-
-            GraphicsUnit units = GraphicsUnit.Pixel;
-            RectangleF srcRect = new RectangleF(0.0F, 0.0F, 150.0F, 150.0F);
-            Graphics g = TicTacPictureBox.CreateGraphics();
-            var result = GetObjectIndex(e.X, e.Y, UserIndex);
-            if (!result.Item3)
+            if (flag)
             {
-                if (TicTacObject[result.Item1, result.Item2].Checked)
-                    g.DrawImage(UserIndex == 1 ? image1 : image2, TicTacObject[result.Item1, result.Item2].X_Min, TicTacObject[result.Item1, result.Item2].Y_Min, srcRect, units);
-
-                Brush brush = new SolidBrush(Color.Black);
-                if (WinGame(UserIndex))
+                GraphicsUnit units = GraphicsUnit.Pixel;
+                RectangleF srcRect = new RectangleF(0.0F, 0.0F, 150.0F, 150.0F);
+                Graphics g = TicTacPictureBox.CreateGraphics();
+                var result = GetObjectIndex(e.X, e.Y, UserIndex);
+                if (!result.Item3)
                 {
-                    g.DrawString($"The winner is user = {UserIndex}", new Font("Arial", 30, FontStyle.Bold), brush, new Point(10, 200));
+                    if (TicTacObject[result.Item1, result.Item2].Checked)
+                        g.DrawImage(UserIndex == 1 ? image1 : image2, TicTacObject[result.Item1, result.Item2].X_Min, TicTacObject[result.Item1, result.Item2].Y_Min, srcRect, units);
+
+                    Brush brush = new SolidBrush(Color.Black);
+                    if (WinGame(UserIndex))
+                    {
+                        g.DrawString($"The winner is player = {UserIndex}", new Font("Arial", 28, FontStyle.Bold), brush, new Point(10, 200));
+                        flag = false;
+
+                    }
+                    UserIndex = ToggelUser(UserIndex);
                 }
-                UserIndex = ToggelUser(UserIndex);
             }
 
         }
